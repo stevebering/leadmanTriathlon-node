@@ -44,7 +44,7 @@ exports.sessions = function(req, res) {
             id: session.id,
             name: session.name,
             startDate: session.startDate,
-            endDate: session.endDate,
+            endDate: session.endDate
         });
     });
 
@@ -78,7 +78,7 @@ exports.addUser = function(req, res) {
 
     res.writeHead(201);
     res.end();
-}
+};
 
 exports.addSession = function(req, res) {
     var session = req.body;
@@ -88,4 +88,4 @@ exports.addSession = function(req, res) {
 
     res.writeHead(201);
     res.end();
-}
+};

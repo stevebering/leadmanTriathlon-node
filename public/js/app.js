@@ -21,11 +21,11 @@ leadman.config(['$routeProvider', '$locationProvider', function($routeProvider, 
             templateUrl: 'partials/users',
             controller: UsersController
         })
-        .when('/sessions/add', {
+        .when('/addSession', {
             templateUrl: 'partials/addSession',
             controller: AddSessionController
         })
-        .when('/users/add', {
+        .when('/addUser', {
             templateUrl: 'partials/addUser',
             controller: AddUserController
         })
@@ -33,5 +33,5 @@ leadman.config(['$routeProvider', '$locationProvider', function($routeProvider, 
             redirectTo: '/'
         });
 
-    $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
 }]);

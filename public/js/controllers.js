@@ -30,11 +30,15 @@ function AddSessionController($scope, $http, $location) {
 }
 
 function AddUserController($scope, $http, $location) {
-    $scope.form = {};
-    $scope.submitUser = function() {
-        $http.post('/api/users', $scope.form)
+    var user = $scope.user;
+    console.log('Posting ' + JSON.stringify(user));
+    $scope.addUser = function() {
+        $http.post('/api/users', user)
             .success(function(data) {
-                $location.path('/');
+                $location.path('/users');
+            })
+            .error(function() {
+                console.log(err);
             });
     };
 }

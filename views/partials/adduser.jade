@@ -1,0 +1,15 @@
+// Created by stevebering on 12/7/13.
+
+.container
+    .row
+        .col-md-4
+            .form-group
+                label(for='firstName') First Name
+                input.form-control(type='text', id='firstName', placeholder='First Name', data-ng-model='user.firstName')
+            .form-group
+                label(for='lastName') Last Name
+                input.form-control(type='text', id='lastName', placeholder='Last Name', data-ng-model='user.lastName')
+            .form-group
+                label(for='emailAddress') Email Address
+                input.form-control(type='email', id='emailAddress', placeholder='Email Address', data-ng-model='user.emailAddress')
+            button.btn.btn-default(type='submit', data-ng-click='addUser()') Add User
