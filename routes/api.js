@@ -82,8 +82,8 @@ exports.addUser = function(req, res) {
 
 exports.addSession = function(req, res) {
     var session = req.body;
+    session.startDate = new Date(session.startDate);
     console.log('Adding session: ' + JSON.stringify(session));
-
     data.sessions.push(session);
 
     res.writeHead(201);

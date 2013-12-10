@@ -1,0 +1,37 @@
+// Created by stevebering on 12/7/13.
+
+.container
+
+    .row
+        .col-md-12
+            p There are {{ sessions.length }} sessions
+
+    .row
+        .col-md-12
+            table.table.table-striped
+                thead
+                    tr
+                        th Session
+                        th Start
+                        th Finish
+                        th Active?
+                        th Actions
+                tbody
+                    tr(data-ng-repeat='session in sessions')
+                        td {{ session.name }}
+                        td {{ session.startDate | date:'mediumDate' }}
+                        td {{ (session.endDate | date:'mediumDate') || 'Active' }}
+                        td {{ session.endDate ? 'false' : 'true' }}
+                        td
+                            a.btn.btn-default(href='/session/{{session.id}}', title='Details')
+                                i.fa.fa-user
+                            a.btn.btn-default(href='/session/edit/{{session.id}}', title='Edit')
+                                i.fa.fa-pencil-square-o
+
+    .row
+        .col-md-12
+            ul.nav.nav-pills
+                li
+                    a {{ sessions.length }} sessions
+                li
+                    a(href='#/addSession') Add Session

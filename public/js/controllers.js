@@ -13,18 +13,20 @@ function UsersController($scope, $http) {
 }
 
 function SessionsController($scope, $http) {
-    $http.get('/api/session')
+    $http.get('/api/sessions')
         .success(function(data, status, headers, config) {
             $scope.sessions = data.sessions;
         });
 }
 
 function AddSessionController($scope, $http, $location) {
-    $scope.form = {};
-    $scope.submitSession = function() {
-        $http.post('/api/sessions', $scope.form)
+    $scope.addSession = function() {
+        var session = $scope.session;
+        console.log('Posting ' + JSON.stringify(session));
+        $http.post('/api/sessions', session)
             .success(function(data) {
-                $location.path('#/sessions');
+                $location.path('/sessions');
+                console.log($location.path());
             });
     };
 }
@@ -37,9 +39,6 @@ function AddUserController($scope, $http, $location) {
             .success(function(data) {
                 $location.path('/users');
                 console.log($location.path());
-            })
-            .error(function() {
-                console.log('Unable to add user.');
             });
     };
 }
