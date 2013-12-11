@@ -3,13 +3,35 @@
 .container
     .row
         .col-md-4
-            .form-group
-                label(for='firstName') First Name
-                input.form-control(type='text', id='firstName', placeholder='First Name', data-ng-model='user.firstName')
-            .form-group
-                label(for='lastName') Last Name
-                input.form-control(type='text', id='lastName', placeholder='Last Name', data-ng-model='user.lastName')
-            .form-group
-                label(for='emailAddress') Email Address
-                input.form-control(type='email', id='emailAddress', placeholder='Email Address', data-ng-model='user.emailAddress')
-            button.btn.btn-default(type='submit', data-ng-click='addUser()') Add User
+            form.css-form(novalidate='', name='form')
+
+                .form-group(ng-class="{'has-error': form.firstName.$invalid, 'has-success': !form.firstName.$invalid}")
+                    label(for='firstName') First Name
+                    input.form-control(type='text', id='firstName', name='firstName',
+                        placeholder='First Name', data-ng-model='user.firstName', required='',
+                        ng-minlength='3', ng-maxlength='50')
+                    .help-block.error(data-ng-show='form.firstName.$dirty && form.firstName.$invalid')
+                        span(data-ng-show='form.firstName.$error.required')  Please provide a first name
+                        span(data-ng-show='form.firstName.$error.minlength')  Please provide a first name (3-50 characters)
+                        span(data-ng-show='form.firstName.$error.maxlength')  Please provide a first name (3-50 characters)
+
+                .form-group(ng-class="{'has-error': form.lastName.$invalid, 'has-success': !form.lastName.$invalid}")
+                    label(for='lastName') Last Name
+                    input.form-control(type='text', id='lastName', name='lastName',
+                        placeholder='Last Name', data-ng-model='user.lastName', required='',
+                        ng-minlength='3', ng-maxlength='50')
+                    .help-block.error(data-ng-show='form.lastName.$dirty && form.lastName.$invalid')
+                        span(data-ng-show='form.lastName.$error.required')  Please provide a first name
+                        span(data-ng-show='form.lastName.$error.minlength')  Please provide a last name (3-50 characters)
+                        span(data-ng-show='form.lastName.$error.maxlength')  Please provide a last name (3-50 characters)
+
+                .form-group(ng-class="{'has-error': form.emailAddress.$invalid, 'has-success': !form.emailAddress.$invalid}")
+                    label(for='emailAddress') Email Address
+                    input.form-control(type='email', id='emailAddress', name='emailAddress',
+                        placeholder='Email Address', data-ng-model='user.emailAddress', required='')
+                    .help-block.error(data-ng-show='form.emailAddress.$dirty && form.emailAddress.$invalid')
+                        span(data-ng-show='form.emailAddress.$error.required') Please provide an email addresss
+                        span(data-ng-show='form.emailAddress.$error.email') Please provide a valid email addresss
+
+                button.btn.btn-default(type='submit', data-ng-click='addUser()',
+                    data-ng-disabled='form.$invalid') Add User
