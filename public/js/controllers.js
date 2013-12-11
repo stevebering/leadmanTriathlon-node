@@ -13,10 +13,19 @@ function UsersController($scope, $http) {
 }
 
 function SessionsController($scope, $http) {
+    $scope.convertToUTC = function(dt) {
+        if (!dt) {
+            return dt;
+        }
+        var localDate = new Date(dt);
+        var localTime = localDate.getTime();
+        var localOffset = localDate.getTimezoneOffset() * 60000;
+        return new Date(localTime + localOffset);
+    };
     $http.get('/api/sessions')
         .success(function(data, status, headers, config) {
             $scope.sessions = data.sessions;
-        });
+    });
 }
 
 function AddSessionController($scope, $http, $location) {

@@ -19,8 +19,8 @@
                 tbody
                     tr(data-ng-repeat='session in sessions')
                         td {{ session.name }}
-                        td {{ session.startDate | date:'mediumDate' }}
-                        td {{ (session.endDate | date:'mediumDate') || 'Active' }}
+                        td {{ convertToUTC(session.startDate) | date:'mediumDate' }}
+                        td {{ (convertToUTC(session.endDate) | date:'mediumDate') || 'Active' }}
                         td {{ session.endDate ? 'false' : 'true' }}
                         td
                             a.btn.btn-default(href='/session/{{session.id}}', title='Details')

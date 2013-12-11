@@ -3,10 +3,26 @@
 .container
     .row
         .col-md-4
-            .form-group
-                label(for='name') Name
-                input.form-control(type='text', id='name', placeholder='Session Name', data-ng-model='session.name')
-            .form-group
-                label(for='startDate') Starts
-                input.form-control(type='text', id='startDate', placeholder='Start Date', data-ng-model='session.startDate')
-            button.btn.btn-default(type='submit', data-ng-click='addSession()') Add Session
+            form.css-form(novalidate='', name='form')
+
+                .form-group(ng-class="{'has-error': form.name.$invalid, 'has-success': !form.name.$invalid}")
+                    label(for='name') Name
+                    input.form-control(type='text', id='name', name='name', placeholder='Session Name', data-ng-model='session.name', required='')
+                    .help-block.error(data-ng-show='form.name.$dirty && form.name.$invalid') Invalid:
+                        span(data-ng-show='form.name.$error.required') Please provide a session name
+
+                .form-group(ng-class="{'has-error': form.startDate.$invalid, 'has-success': !form.startDate.$invalid}")
+                    label(for='startDate') Starts
+                    input.form-control(type='date', id='startDate', name='startDate', placeholder='Start Date', data-ng-model='session.startDate', required='')
+                    .help-block.error(data-ng-show='form.startDate.$dirty && form.startDate.$invalid') Invalid:
+                        span(data-ng-show='form.startDate.$error.required') Please provide a session start date
+
+                .form-group(ng-class="{'has-error': form.endDate.$invalid, 'has-success': !form.endDate.$invalid}")
+                    label(for='endDate') Ends
+                    input.form-control(type='date', id='endDate', name='endDate', placeholder='End Date', data-ng-model='session.endDate')
+                    .help-block.error(data-ng-show='form.endDate.$dirty && form.endDate.$invalid') Invalid:
+                        span(data-ng-show='form.endDate.$error.required') Please provide a session end date
+
+                button.btn.btn-default(type='submit', data-ng-click='addSession()', data-ng-disabled='form.$invalid') Add Session
+
+

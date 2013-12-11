@@ -73,7 +73,6 @@ exports.users = function(req, res) {
 exports.addUser = function(req, res) {
     var user = req.body;
     console.log('Adding user: ' + JSON.stringify(user));
-
     data.users.push(user);
 
     res.writeHead(201);
