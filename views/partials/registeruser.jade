@@ -41,12 +41,40 @@
 
                     .input-group
                         input.form-control(type='email', id='emailAddress', name='emailAddress',
-                            placeholder='Email Address', data-ng-model='user.emailAddress', required='')
+                        placeholder='Email Address', data-ng-model='user.emailAddress', required='')
                         span.input-group-addon
                             i.fa.fa-star
 
                     .help-block.error(data-ng-show='form.emailAddress.$dirty && form.emailAddress.$invalid')
-                        span(data-ng-show='form.emailAddress.$error.email') Please provide a valid email addresss
+                        span(data-ng-show='form.emailAddress.$error.email') Please provide a valid email address
 
-                button.btn.btn-default(type='submit', data-ng-click='addUser()',
-                    data-ng-disabled='form.$invalid') Add User
+                .form-group(ng-class="{'has-error': form.password.$invalid, 'has-success': !form.password.$invalid}")
+
+                    label.control-label(for='password') Password
+
+                    .input-group
+                        input.form-control(type='password', id='password', name='password',
+                        placeholder='Password', data-ng-model='user.password', required='')
+                        span.input-group-addon
+                            i.fa.fa-star
+
+                    .help-block.error(data-ng-show='form.password.$dirty && form.password.$invalid')
+                        span(data-ng-show='form.password.$error.email') Please provide a valid email address
+
+                .form-group(ng-class="{'has-error': form.confirm.$invalid, 'has-success': !form.confirm.$invalid}")
+
+                    label.control-label(for='confirm') Confirm Password
+
+                    .input-group
+                        input.form-control(type='password', id='confirm', name='confirm',
+                        placeholder='Confirm Password', data-ng-model='user.confirm', required='',
+                        data-password-verify='user.password')
+                        span.input-group-addon
+                            i.fa.fa-star
+
+                    .help-block.error(data-ng-show='form.confirm.$dirty && form.confirm.$invalid')
+                        span(data-ng-show='form.confirm.$error.passwordVerify') Passwords do not match
+
+
+                button.btn.btn-default(type='submit', data-ng-click='registerUser()',
+                    data-ng-disabled='form.$invalid') Register

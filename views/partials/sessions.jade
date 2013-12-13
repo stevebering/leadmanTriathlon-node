@@ -20,8 +20,8 @@
                     tr(data-ng-repeat='session in sessions')
                         td {{ session.name }}
                         td {{ convertToUTC(session.startDate) | date:'mediumDate' }}
-                        td {{ (convertToUTC(session.endDate) | date:'mediumDate') || 'Active' }}
-                        td {{ session.endDate ? 'false' : 'true' }}
+                        td {{ convertToUTC(session.endDate) | date:'mediumDate' }}
+                        td {{ session.isActive ? 'true' : 'false' }}
                         td
                             a.btn.btn-default(href='/session/{{session.id}}', title='Details')
                                 i.fa.fa-user

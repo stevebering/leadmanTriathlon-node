@@ -51,3 +51,15 @@ function AddUserController($scope, $http, $location) {
             });
     };
 }
+
+function RegisterUserController($scope, $http, $location) {
+    $scope.registerUser = function() {
+        var user = $scope.user;
+        console.log('Posting ' + JSON.stringify(user));
+        $http.post('/api/registerUser', user)
+            .success(function(data) {
+                $location.path('/users');
+                console.log($location.path());
+            });
+    };
+}

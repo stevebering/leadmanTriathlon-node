@@ -41,6 +41,5 @@
                     .help-block.error(data-ng-show='form.endDate.$dirty && form.endDate.$invalid') Invalid:
                         span(data-ng-show='form.endDate.$error.required') Please provide a session end date
 
-                button.btn.btn-default(type='submit', data-ng-click='addSession()', data-ng-disabled='form.$invalid') Add Session
-
-
+                button.btn.btn-default(type='submit', data-ng-click='addSession()',
+                    data-ng-disabled='form.$invalid') Add Session
