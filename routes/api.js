@@ -6,36 +6,6 @@
 var hash = require('../utils/hash'),
     Sequelize = require('sequelize');
 
-var data = {
-    "sessions": [
-        {
-            "id": 1,
-            "name": "Session 1",
-            "startDate": new Date('1/1/2013'),
-            "endDate": new Date('5/30/2013')
-        },
-        {
-            "id": 2,
-            "name": "Session 2",
-            "startDate": new Date('6/1/2013')
-        }
-    ],
-    "users": [
-        {
-            "id": 1,
-            "firstName": "Steve",
-            "lastName": "Bering",
-            "emailAddress": "stevebering@gmail.com"
-        },
-        {
-            "id": 2,
-            "firstName": "Katie",
-            "lastName": "Bering",
-            "emailAddress": "katiebering@gmail.com"
-        }
-    ]
-};
-
 module.exports = function(app) {
     var User = app.get('models').User,
         UserCredential = app.get('models').UserCredential,
@@ -101,11 +71,11 @@ module.exports = function(app) {
                 givenName: user.firstName,
                 familyName: user.lastName
             })
-                .success(function(user, created) {
-                    console.log(user.values);
-                    res.writeHead(201);
-                    res.end();
-                });
+            .success(function(user, created) {
+                console.log(user.values);
+                res.writeHead(201);
+                res.end();
+            });
         },
 
         // post new user
@@ -164,7 +134,6 @@ module.exports = function(app) {
             var session = req.body;
             session.startDate = new Date(session.startDate);
             console.log('Adding session: ' + JSON.stringify(session));
-            data.sessions.push(session);
 
             Session.create({
                 name: session.name,
