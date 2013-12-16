@@ -1,6 +1,5 @@
 CREATE DATABASE `leadman` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-
 CREATE TABLE `sessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
@@ -53,7 +52,7 @@ CREATE TABLE `splits` (
 	`updatedAt` datetime NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `fk_split_user_idx` (`user_id`),
-  CONSTRAINT `fk_split_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `fk_split_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 	KEY `fk_split_session_idx` (`session_id`),
   CONSTRAINT `fk_split_session` FOREIGN KEY (`session_id`) REFERENCES `sessions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
