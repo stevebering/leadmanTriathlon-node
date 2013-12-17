@@ -8,7 +8,7 @@
 
     .row
         .col-md-12
-            table.table.table-striped
+            table.table.table-striped.table-bordered
                 thead
                     tr
                         th First Name
@@ -21,10 +21,11 @@
                         td {{ user.lastName }}
                         td {{ user.emailAddress }}
                         td
-                            a.btn.btn-default(href='/user/{{user.id}}', title='Details')
-                                i.fa.fa-user
-                            a.btn.btn-default(href='/user/edit/{{user.id}}', title='Edit')
-                                i.fa.fa-pencil-square-o
+                            div.btn-group-sm
+                                a.btn.btn-default(href='/user/{{user.id}}', title='Details')
+                                    i.fa.fa-user
+                                a.btn.btn-default(href='/user/edit/{{user.id}}', title='Edit')
+                                    i.fa.fa-pencil-square-o
 
     .row
         .col-md-12

@@ -5,8 +5,8 @@ html(lang='en', data-ng-app='leadman')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
-    link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    //link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.min.css')
 
     link(rel='stylesheet', href='/stylesheets/app.css')
@@ -21,13 +21,39 @@ html(lang='en', data-ng-app='leadman')
                 span.icon-bar
             a.navbar-brand(href='#') Leadman Triathlon
         .collapse.navbar-collapse
-            ul.nav.navbar-nav
-                li.active
+            ul.nav.navbar-nav(data-ng-controller="MenuController")
+                li
                     a(href='#') Home
-                li
+                li(data-ng-class="{'active':getClass('/users')}")
                     a(href='#/users') Users
-                li
+                li(data-ng-class="{'active':getClass('/sessions')}")
                     a(href='#/sessions') Sessions
+
+            ul.nav.navbar-nav.navbar-right
+                li
+                    a(href="http://www.jquery2dotnet.com") Sign Up
+                    li.dropdown
+                        a.dropdown-toggle(href="http://www.jquery2dotnet.com", data-toggle="dropdown")
+                            | Sign in
+                            b.caret
+                        ul.dropdown-menu(style="padding: 15px;min-width: 250px;")
+                            li
+                                .row
+                                    .col-md-12
+                                        form.form(role="form", method="post", action="login", accept-charset="UTF-8", id="login-nav")
+                                            .form-group
+                                                label.sr-only(for="exampleInputEmail2") Email address
+                                                input.form-control(type="email", id="exampleInputEmail2", placeholder="Email address", required='')
+                                            .form-group
+                                                label.sr-only(for="exampleInputPassword2") Password
+                                                input.form-control(type="password", id="exampleInputPassword2", placeholder="Password", required='')
+                                            .form-group
+                                                button.btn.btn-success.btn-block(type="submit") Sign in
+                            li.divider
+
+                            li
+                                input.btn.btn-primary.btn-block(type="button", id="sign-in-google", value="Sign In with Google")
+
      .container
         block content
 

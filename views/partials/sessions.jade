@@ -23,10 +23,11 @@
                         td {{ convertToUTC(session.endDate) | date:'mediumDate' }}
                         td {{ session.isActive ? 'true' : 'false' }}
                         td
-                            a.btn.btn-default(href='/session/{{session.id}}', title='Details')
-                                i.fa.fa-user
-                            a.btn.btn-default(href='/session/edit/{{session.id}}', title='Edit')
-                                i.fa.fa-pencil-square-o
+                            div.btn-group-sm
+                                a.btn.btn-default(href='/session/{{session.id}}', title='Details')
+                                    i.fa.fa-user
+                                a.btn.btn-default(href='/session/edit/{{session.id}}', title='Edit')
+                                    i.fa.fa-pencil-square-o
 
     .row
         .col-md-12

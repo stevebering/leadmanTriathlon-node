@@ -15,3 +15,6 @@ a {
 .toolbox a {
     padding-right: 3px;
 }
+
+/* body { margin-top:30px; } */
+#login-nav input { margin-bottom: 15px; }
