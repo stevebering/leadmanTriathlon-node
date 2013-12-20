@@ -29,24 +29,24 @@ html(lang='en', data-ng-app='leadman')
                 li(data-ng-class="{'active':getClass('/sessions')}")
                     a(href='#/sessions') Sessions
 
-            ul.nav.navbar-nav.navbar-right
+            ul.nav.navbar-nav.navbar-right(data-ng-controller='UsersController')
                 li
-                    a(href="http://www.jquery2dotnet.com") Sign Up
+                    a(href="#/signup") Sign Up
                     li.dropdown
-                        a.dropdown-toggle(href="http://www.jquery2dotnet.com", data-toggle="dropdown")
+                        a.dropdown-toggle(href="/", data-toggle="dropdown")
                             | Sign in
                             b.caret
                         ul.dropdown-menu(style="padding: 15px;min-width: 250px;")
                             li
                                 .row
                                     .col-md-12
-                                        form.form(role="form", method="post", action="login", accept-charset="UTF-8", id="login-nav")
+                                        form.form(role="form", method="post", action="#/login", accept-charset="UTF-8", id="login-nav")
                                             .form-group
-                                                label.sr-only(for="exampleInputEmail2") Email address
-                                                input.form-control(type="email", id="exampleInputEmail2", placeholder="Email address", required='')
+                                                label.sr-only(for="username") Username
+                                                input.form-control(type="email", id="username", placeholder="Username", data-ng-model='username', required='')
                                             .form-group
-                                                label.sr-only(for="exampleInputPassword2") Password
-                                                input.form-control(type="password", id="exampleInputPassword2", placeholder="Password", required='')
+                                                label.sr-only(for="password") Password
+                                                input.form-control(type="password", id="password",  placeholder="Password", data-ng-model='password', required='')
                                             .form-group
                                                 button.btn.btn-success.btn-block(type="submit") Sign in
                             li.divider

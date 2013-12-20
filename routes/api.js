@@ -82,8 +82,6 @@ module.exports = function(app) {
         registerUser: function(req, res) {
             var submission = req.body;
             console.log('Registering user: ' + JSON.stringify(submission));
-            data.users.push(submission);
-
             hash(submission.password, function(err, salt, hash) {
                if (err) {
                    console.log(err);

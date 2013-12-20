@@ -1,0 +1,23 @@
+//
+   Created by sbering on 12/17/13.
+
+.container
+    .row
+        .col-md-4
+            form.css-form(novalidate='', name='form')
+                .form-group(ng-class="{'has-error': form.username.$invalid, 'has-success': !form.username.$invalid}")
+                    label.control-label(for='username') Username
+                    .input-group
+                        input.form-control(type='text', id='username', name='username',
+                        placeholder='Username', data-ng-model='user.username', required='')
+                        span.input-group-addon
+                            i.fa.fa-star
+                .form-group(ng-class="{'has-error': form.password.$invalid, 'has-success': !form.password.$invalid}")
+                    label.control-label(for='password') Last Name
+                    .input-group
+                        input.form-control(type='password', id='password', name='password',
+                        placeholder='Password', data-ng-model='user.password', required='')
+                        span.input-group-addon
+                            i.fa.fa-star
+                button.btn.btn-default(type='submit', data-ng-click='login()',
+                data-ng-disabled='form.$invalid') Sign In

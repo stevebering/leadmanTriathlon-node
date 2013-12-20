@@ -23,15 +23,15 @@ leadman.config(['$routeProvider', '$locationProvider', function($routeProvider, 
         })
         .when('/addSession', {
             templateUrl: 'partials/addSession',
-            controller: AddSessionController
+            controller: SessionsController
         })
         .when('/addUser', {
             templateUrl: 'partials/addUser',
-            controller: AddUserController
+            controller: UsersController
         })
         .when('/registerUser', {
             templateUrl: 'partials/registerUser',
-            controller: RegisterUserController
+            controller: UsersController
         })
         .otherwise({
             redirectTo: '/'
