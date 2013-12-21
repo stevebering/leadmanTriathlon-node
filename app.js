@@ -9,7 +9,8 @@ var express = require('express'),
     path = require('path'),
     passport = require('passport'),
     config = require('./config/config'),
-    app = express();
+    app = express(),
+    auth = require('./middleware/auth');
 
 require('./config/passport')(app, passport, config);
 
@@ -49,7 +50,23 @@ app.configure('production', function() {
 
 // configure routes
 app.get('/', routes.index);
-app.get('/partials/:name', routes.partials);
+app.get('/partials/:name', auth, routes.partials);
+
+// authentication routes
+app.get('/loggedIn', function(req, res) {
+    console.log('checking to see if the user is authenticated.');
+    res.send(req.isAuthenticated() ? req.user : '0');
+});
+// route to login in
+app.post('/login', passport.authenticate('local'), function(req, res) {
+    console.log('logged in as ' + req.user);
+    res.send(req.user);
+});
+// route to log out
+app.post('/logout', function(req, res) {
+    req.logOut();
+    res.send(200);
+});
 
 // json api
 var api = require('./routes/api')(app);

@@ -35,8 +35,6 @@ function UsersController($scope, $http, $location) {
         var username = $scope.username,
             password = $scope.password;
         console.log('signing in with username: ' + username + ' password: ' + password);
-
-
     }
 }
 
@@ -75,3 +73,31 @@ function MenuController($scope, $http, $location) {
         return false;
     };
 }
+
+function LoginController($scope, $rootScope, $http, $location) {
+    // this object will be filled by the form
+    $scope.user = {};
+
+    // register the login function
+    $scope.login = function() {
+        console.log("logging in as ");
+        console.log($scope.user);
+        $http.post('/login', {
+            username: $scope.user.username,
+            password: $scope.user.password
+        })
+        .success(function (user) {
+            // no errors: authentication ok
+            console.log("logged in successfully as...");
+            console.log(user);
+            $rootScope.message = "Welcome " + user.username;
+            $location.url('/');
+        })
+        .error(function() {
+           // error: authentication failed
+           console.log("failed to log in.");
+           $rootScope.message = "Unable to sign in. Invalid credentials.";
+           $location.url('/signin');
+        });
+    };
+};

@@ -29,6 +29,7 @@ module.exports = function(app, passport, config) {
             passwordField: 'password'
         },
         function(username, password, done) {
+            console.log('logging in to passport local via: ' + username + ' with password: ' + password);
             var UserCredential = app.get('models').UserCredential;
             UserCredential.findOne({ username: username, include: [ User ]}, function(err, credential) {
                 if (err) {

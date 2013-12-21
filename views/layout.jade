@@ -29,7 +29,7 @@ html(lang='en', data-ng-app='leadman')
                 li(data-ng-class="{'active':getClass('/sessions')}")
                     a(href='#/sessions') Sessions
 
-            ul.nav.navbar-nav.navbar-right(data-ng-controller='UsersController')
+            ul.nav.navbar-nav.navbar-right(data-ng-controller='LoginController')
                 li
                     a(href="#/signup") Sign Up
                     li.dropdown
@@ -40,15 +40,16 @@ html(lang='en', data-ng-app='leadman')
                             li
                                 .row
                                     .col-md-12
-                                        form.form(role="form", method="post", action="#/login", accept-charset="UTF-8", id="login-nav")
+                                        form.form(role="form", name='form', id="login-nav")
                                             .form-group
                                                 label.sr-only(for="username") Username
-                                                input.form-control(type="email", id="username", placeholder="Username", data-ng-model='username', required='')
+                                                input.form-control(type="email", id="username", name='username', placeholder="Username", data-ng-model='user.usename', required='')
                                             .form-group
                                                 label.sr-only(for="password") Password
-                                                input.form-control(type="password", id="password",  placeholder="Password", data-ng-model='password', required='')
+                                                input.form-control(type="password", id="password",  name='password', placeholder="Password", data-ng-model='user.password', required='')
                                             .form-group
-                                                button.btn.btn-success.btn-block(type="submit") Sign in
+                                                button.btn.btn-success.btn-block(type="submit",
+                                                    data-ng-click='login()') Sign in
                             li.divider
 
                             li
