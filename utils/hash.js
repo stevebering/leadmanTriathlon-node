@@ -4,7 +4,7 @@
 
 var crypto = require('crypto');
 
-var byteSize = 128,
+var byteSize = 33,
     iterations = 12000;
 
 /**
@@ -18,16 +18,22 @@ var byteSize = 128,
  */
 module.exports = function(pwd, salt, fn) {
     if (3 == arguments.length) {
-        crypto.pbkdf2(pwd, salt, iterations, byteSize, fn);
+        if (!pwd) return fn(new Error('Password missing'));
+        if (!salt) return fn(new Error('Salt missing'));
+        crypto.pbkdf2(pwd, salt, iterations, byteSize, function(err, hash) {
+            if (err) return fn(err);
+            fn(null, hash.toString('base64'));
+        });
     }
     else {
         fn = salt;
+        if (!pwd) return fn(new Error('Password missing'));
         crypto.randomBytes(byteSize, function(err, salt) {
             if (err) return fn(err);
             salt = salt.toString('base64');
             crypto.pbkdf2(pwd, salt, iterations, byteSize, function(err, hash) {
                 if (err) return fn(err);
-                fn(null, salt, hash);
+                fn(null, salt, hash.toString('base64'));
             })
         })
     }

@@ -62,7 +62,7 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
             }
         })
         .when('/login', {
-            templateUrl: 'partials/signin',
+            templateUrl: 'anon/signin',
             controller: LoginController
         })
         .when('/users', {
@@ -86,12 +86,9 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
                 loggedin: checkLoggedIn
             }
         })
-        .when('/registerUser', {
-            templateUrl: 'partials/registerUser',
-            controller: UsersController,
-            resolve: {
-                loggedin: checkLoggedIn
-            }
+        .when('/signup', {
+            templateUrl: 'anon/signup',
+            controller: UsersController
         })
         .otherwise({
             redirectTo: '/'

@@ -17,7 +17,7 @@ module.exports = function(app, passport, config) {
     passport.deserializeUser(function(id, done) {
        var User = app.get('models').User;
 
-       User.findOne({ id: id }, function(err, user) {
+       User.find({ id: id }, function(err, user) {
           done(err, user);
        });
     });
@@ -31,11 +31,15 @@ module.exports = function(app, passport, config) {
         function(username, password, done) {
             console.log('logging in to passport local via: ' + username + ' with password: ' + password);
             var UserCredential = app.get('models').UserCredential;
-            UserCredential.findOne({ username: username, include: [ User ]}, function(err, credential) {
-                if (err) {
-                    return done(err);
-                }
-
+            var User = app.get('models').User;
+            UserCredential.find({
+                where: { username: username },
+                include: [User]
+            })
+            .error(function(err) {
+                return done(err);
+            })
+            .success(function(credential) {
                 if (!credential) {
                     console.log('unable to locate userCredential by username');
                     return done(null, false, { message: "Incorrect username" });
@@ -51,7 +55,9 @@ module.exports = function(app, passport, config) {
                     }
                     if (hash == credential.passwordhash) {
                         console.log('password matches password on file for user');
-                        return done(null, credential.User);
+                        var user = credential.user;
+                        console.log(user);
+                        return done(null, user);
                     }
 
                     // password does not match

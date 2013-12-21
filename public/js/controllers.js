@@ -30,12 +30,6 @@ function UsersController($scope, $http, $location) {
                 console.log($location.path());
             });
     };
-
-    $scope.login = function() {
-        var username = $scope.username,
-            password = $scope.password;
-        console.log('signing in with username: ' + username + ' password: ' + password);
-    }
 }
 
 function SessionsController($scope, $http, $location) {
@@ -97,7 +91,6 @@ function LoginController($scope, $rootScope, $http, $location) {
            // error: authentication failed
            console.log("failed to log in.");
            $rootScope.message = "Unable to sign in. Invalid credentials.";
-           $location.url('/signin');
         });
     };
 };

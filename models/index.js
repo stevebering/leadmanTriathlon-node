@@ -6,6 +6,9 @@ var fs = require('fs'),
     path = require('path'),
     Sequelize = require('sequelize'),
     sequelize = new Sequelize('leadman', 'root', '1SecureMS', {
+        host: "localhost",
+        port: 3306,
+        dialect: 'mysql',
         define: {
             underscored: false,
             syncOnAssociation: false

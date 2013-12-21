@@ -50,6 +50,7 @@ app.configure('production', function() {
 
 // configure routes
 app.get('/', routes.index);
+app.get('/anon/:name', routes.anon);
 app.get('/partials/:name', auth, routes.partials);
 
 // authentication routes
