@@ -78,7 +78,7 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
             templateUrl: 'partials/users',
             controller: UsersController,
             resolve: {
-                loggedin: checkLoggedIn
+                 loggedin: checkLoggedIn
             }
         })
         .when('/addSession', {

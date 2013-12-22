@@ -40,6 +40,7 @@ module.exports = function(app) {
         users: function(req, res) {
             var users = [];
 
+            console.log('loading all users...');
             User.findAll().success(function(records) {
                 records.forEach(function(record) {
                     var user = {
@@ -52,6 +53,7 @@ module.exports = function(app) {
                     users.push(user);
                 });
 
+                console.log('all users loaded. Found: ' + records.length);
                 res.json({
                     users: users
                 });
@@ -62,7 +64,6 @@ module.exports = function(app) {
         addUser: function(req, res) {
             var user = req.body;
             console.log('Adding user: ' + JSON.stringify(user));
-            data.users.push(user);
 
             User.create({
                 provider: 'local',

@@ -10,6 +10,7 @@ module.exports = function(app, passport, config) {
 
     // setup how we serialize to cookie
     passport.serializeUser(function(user, done) {
+       console.log('serializing user: ' + user.id);
        done(null, user.id);
     });
 
@@ -17,8 +18,15 @@ module.exports = function(app, passport, config) {
     passport.deserializeUser(function(id, done) {
        var User = app.get('models').User;
 
-       User.find({ id: id }, function(err, user) {
-          done(err, user);
+       console.log('locating user: ' + id);
+       User.find({ where: { id: id } })
+       .error(function(err) {
+           console.log('unable to locate user: ' + id);
+           done(err);
+       })
+       .success(function(user) {
+           console.log('loaded user: ' + user.displayName);
+           done(null, user);
        });
     });
 

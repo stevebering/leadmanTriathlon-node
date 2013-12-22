@@ -88,7 +88,7 @@ function LoginController($scope, $rootScope, $http, $location) {
                 value: "Welcome " + user.displayName,
                 type: 'success'
             };
-            $location.url('/users').replace;
+            $location.url('/users');
             console.log($location.path());
         })
         .error(function() {
@@ -100,4 +100,19 @@ function LoginController($scope, $rootScope, $http, $location) {
            };
         });
     };
+
+    $scope.logout = function() {
+        console.log("logging out...");
+        $http.post('/logout')
+            .success(function() {
+                console.log("logged out.");
+                $location.url('/');
+            })
+            .error(function() {
+                $rootScope.message = {
+                    value: "Unable to log out. An error occurred.",
+                    type: 'error'
+                };
+            });
+    }
 };
