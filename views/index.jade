@@ -5,7 +5,11 @@ block content
       h1= title
       p Welcome to #{title}
 
-  div.row(data-ng-view='')
+      .alert(ng-show="$root.message",
+            ng-class="{ 'alert-danger': $root.message.type == 'error', 'alert-success': $root.message.type == 'success', 'alert-info': $root.message.type == 'info' }")
+          {{ $root.message.value }}
+
+      div.row(data-ng-view='')
 
 block scripts
     script(src='js/app.js')

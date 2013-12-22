@@ -56,11 +56,12 @@ app.get('/partials/:name', auth, routes.partials);
 // authentication routes
 app.get('/loggedIn', function(req, res) {
     console.log('checking to see if the user is authenticated.');
+    console.log('isAuthenticated: ' + req.isAuthenticated());
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 // route to login in
 app.post('/login', passport.authenticate('local'), function(req, res) {
-    console.log('logged in as ' + req.user);
+    console.log('logged in as ' + req.user.givenName);
     res.send(req.user);
 });
 // route to log out

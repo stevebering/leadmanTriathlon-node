@@ -5,10 +5,6 @@
     .row
         .col-md-4
             form.css-form(novalidate='', name='form')
-                .alert.alert-danger(ng-show="$root.message.length")
-                    b Uh oh!&nbsp;
-                    {{ $root.message }}
-
                 .form-group(ng-class="{'has-error': form.username.$invalid, 'has-success': !form.username.$invalid}")
                     label.control-label(for='username') Username
                     .input-group

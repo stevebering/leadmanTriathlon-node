@@ -84,13 +84,20 @@ function LoginController($scope, $rootScope, $http, $location) {
             // no errors: authentication ok
             console.log("logged in successfully as...");
             console.log(user);
-            $rootScope.message = "Welcome " + user.username;
-            $location.url('/');
+            $rootScope.message = {
+                value: "Welcome " + user.displayName,
+                type: 'success'
+            };
+            $location.url('/users').replace;
+            console.log($location.path());
         })
         .error(function() {
            // error: authentication failed
            console.log("failed to log in.");
-           $rootScope.message = "Unable to sign in. Invalid credentials.";
+           $rootScope.message = {
+               value: "Unable to sign in. Invalid credentials.",
+               type: 'error'
+           };
         });
     };
 };

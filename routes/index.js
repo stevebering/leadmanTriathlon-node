@@ -11,6 +11,7 @@ exports.index = function(req, res){
 
 exports.partials = function(req, res) {
     var name = req.params.name;
+    console.log('loading partial: ' + name);
     res.render('partials/' + name);
 };
 

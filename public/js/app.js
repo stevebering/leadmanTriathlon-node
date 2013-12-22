@@ -18,15 +18,22 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
         var deferred = $q.defer();
 
         // make an AJAX call to check if the user is logged in
-        $http.get('/api/loggedin').success(function(user) {
+        $http.get('/loggedin').success(function(user) {
             // authenticated
             if (user !== '0') {
+                console.log('user is authenticated with id: ' + user);
                 $timeout(deferred.resolve, 0);
             }
             // not authenticated
             else {
-                $rootScope.message = "Please log in to view this page.";
-                $timeout(function() { deferred.reject();}, 0);
+                $rootScope.message = {
+                    value: "Please log in to view this page.",
+                    type: 'info'
+                };
+                console.log('user is not authenticated.');
+                $timeout(function() {
+                    deferred.reject(); // reject the promise immediately
+                }, 0);
                 $location.url('/login');
             }
         });
@@ -40,11 +47,13 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
            return promise.then(
                // success: just return the response
                function(response) {
+                   console.log("returning the response because we had no problems.");
                    return response;
                },
                // error: check the error status to get only the 401 statuses
                function(response) {
                    if (response.status === 401) {
+                       console.log('redirecting to login because we got a 401');
                        $location.url('/login');
                    }
                    return $q.reject(response);
@@ -96,10 +105,13 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
 }]);
 
 leadman.run(function($rootScope, $http) {
-    $rootScope.message = '';
+    $rootScope.message = {};
 
     $rootScope.logout = function() {
-        $rootScope.message = 'Logged out';
+        $rootScope.message = {
+            value: 'Logged out',
+            type: 'info'
+        };
         $http.post('/api/logout');
     }
 })
