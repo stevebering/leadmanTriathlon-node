@@ -76,7 +76,6 @@ module.exports = function(app, passport, config) {
         }
     ));
 
-
     // set up google authentication strategy
     passport.use(new GoogleStrategy(
         {
@@ -91,10 +90,10 @@ module.exports = function(app, passport, config) {
                 middleName: profile.name.middleName,
                 familyName: profile.name.familyName
             })
-                .success(function(user, created) {
-                    console.log(user);
-                    console.log('New user? ' + created);
-                });
+            .success(function(user, created) {
+                console.log(user);
+                console.log('New user? ' + created);
+            });
         }
     ));
 };

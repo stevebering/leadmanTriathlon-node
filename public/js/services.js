@@ -5,5 +5,7 @@
 
 /* services */
 
-angular.module('leadman.services', [])
+var appServices = angular.module('leadman.services', []);
+
+appServices
     .value('version', '0.1');

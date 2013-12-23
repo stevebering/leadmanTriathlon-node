@@ -117,6 +117,7 @@ module.exports = function(app) {
                         credential.setUser(user).on('success', function() {
                             credential.getUser().on('success', function(u) {
                                 console.log('Credential user: ', u.displayName);
+                                req.login(credential);
                                 res.writeHead(201);
                                 res.end();
                             })

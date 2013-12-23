@@ -8,12 +8,19 @@ var leadman = angular.module('leadman',
         'leadman.filters',
         'leadman.services',
         'leadman.directives',
-        'ngRoute'
+        'ngRoute',
+        'angular-flash.service',
+        'angular-flash.flash-alert-directive'
     ]);
 
-leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+leadman.config(['$routeProvider', '$httpProvider', 'flashProvider', function($routeProvider, $httpProvider, flashProvider) {
+    flashProvider.errorClassnames.push("alert-danger");
+    flashProvider.successClassnames.push("alert-success");
+    flashProvider.infoClassnames.push("alert-info");
+    flashProvider.warnClassnames.push("alert-warning");
+
     // check if the user is logged in
-    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope) {
+    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope, flash) {
       // initialize a new promise
         var deferred = $q.defer();
 
@@ -26,10 +33,7 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
             }
             // not authenticated
             else {
-                $rootScope.message = {
-                    value: "Please log in to view this page.",
-                    type: 'info'
-                };
+                flash.info = "Please log in to view this page."
                 console.log('user is not authenticated.');
                 $timeout(function() {
                     deferred.reject(); // reject the promise immediately
@@ -47,7 +51,6 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
            return promise.then(
                // success: just return the response
                function(response) {
-                   console.log("returning the response because we had no problems.");
                    return response;
                },
                // error: check the error status to get only the 401 statuses
@@ -104,14 +107,9 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
         });
 }]);
 
-leadman.run(function($rootScope, $http) {
-    $rootScope.message = {};
-
+leadman.run(function($rootScope, $http, flash) {
     $rootScope.logout = function() {
-        $rootScope.message = {
-            value: 'Logged out',
-            type: 'info'
-        };
+        flash.info = "Logged out. Please close your browser to complete your logout."
         $http.post('/api/logout');
     }
 })

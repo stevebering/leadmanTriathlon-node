@@ -68,7 +68,7 @@ function MenuController($scope, $http, $location) {
     };
 }
 
-function LoginController($scope, $rootScope, $http, $location) {
+function LoginController($scope, $rootScope, $http, $location, flash) {
     // this object will be filled by the form
     $scope.user = {};
 
@@ -84,20 +84,14 @@ function LoginController($scope, $rootScope, $http, $location) {
             // no errors: authentication ok
             console.log("logged in successfully as...");
             console.log(user);
-            $rootScope.message = {
-                value: "Welcome " + user.displayName,
-                type: 'success'
-            };
+            flash.success = "Welcome " + user.displayName;
             $location.url('/users');
             console.log($location.path());
         })
         .error(function() {
            // error: authentication failed
            console.log("failed to log in.");
-           $rootScope.message = {
-               value: "Unable to sign in. Invalid credentials.",
-               type: 'error'
-           };
+           flash.error = "Unable to sign in with the provided credentials";
         });
     };
 
@@ -109,10 +103,7 @@ function LoginController($scope, $rootScope, $http, $location) {
                 $location.url('/');
             })
             .error(function() {
-                $rootScope.message = {
-                    value: "Unable to log out. An error occurred.",
-                    type: 'error'
-                };
+                flash.error = "Unable to sign out. An error occurred.";
             });
     }
 };

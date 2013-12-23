@@ -5,9 +5,21 @@ block content
       h1= title
       p Welcome to #{title}
 
-      .alert(ng-show="$root.message",
-            ng-class="{ 'alert-danger': $root.message.type == 'error', 'alert-success': $root.message.type == 'success', 'alert-info': $root.message.type == 'info' }")
-          {{ $root.message.value }}
+      div.fade(flash-alert='error', active-class='in alert')
+        strong.alert-heading Uh oh! &nbsp;
+        span.alert-message {{ flash.message }}
+
+      div.fade(flash-alert='warn', active-class='in alert')
+        strong.alert-heading Uh oh! &nbsp;
+        span.alert-message {{ flash.message }}
+
+      div.fade(flash-alert='info', active-class='in alert')
+          strong.alert-heading Note: &nbsp;
+          span.alert-message {{ flash.message }}
+
+      div.fade(flash-alert='success', active-class='in alert')
+          strong.alert-heading Congrats! &nbsp;
+          span.alert-message {{ flash.message }}
 
       div.row(data-ng-view='')
 
