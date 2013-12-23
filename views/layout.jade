@@ -55,10 +55,10 @@ html(lang='en', data-ng-app='leadman')
                         li
                             input.btn.btn-primary.btn-block(type="button", id="sign-in-google", value="Sign In with Google")
 
-                li.dropdown(ng-show='loggedIn()')
+                li.dropdown.active#profile(ng-show='loggedIn()')
                     a.dropdown-toggle(href='/', data-toggle='dropdown')
                         span.fa.fa-user &nbsp;
-                        | Profile
+                        | {{ currentUser().firstName }}
                         b.caret
                     ul.dropdown-menu
                         li

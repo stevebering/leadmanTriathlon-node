@@ -68,6 +68,7 @@ function MenuController($scope, $http, $location, Auth) {
     };
 
     $scope.loggedIn = Auth.isLoggedIn;
+    $scope.currentUser = Auth.currentUser;
 }
 
 function LoginController($scope, $rootScope, $http, $location, flash, Auth) {
@@ -87,18 +88,21 @@ function LoginController($scope, $rootScope, $http, $location, flash, Auth) {
             // no errors: authentication ok
             console.log("logged in successfully as...");
             console.log(user);
-            flash.success = "Welcome " + user.displayName;
             Auth.signOn({
                 firstName: user.givenName,
                 lastName: user.familyName,
                 displayName: user.displayName
             });
+            $scope.user.username = '';
+            $scope.user.password = '';
             $location.url('/users');
             console.log($location.path());
         })
         .error(function() {
            // error: authentication failed
            console.log("failed to log in.");
+            $scope.user.username = '';
+            $scope.user.password = '';
            flash.error = "Unable to sign in with the provided credentials";
         });
     };

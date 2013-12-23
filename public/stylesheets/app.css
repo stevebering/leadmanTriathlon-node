@@ -18,3 +18,7 @@ a {
 
 /* body { margin-top:30px; } */
 #login-nav input { margin-bottom: 15px; }
+
+#profile > a {
+    background-color: #080808
+}
