@@ -57,6 +57,8 @@ app.get('/partials/:name', auth, routes.partials);
 app.get('/loggedIn', function(req, res) {
     console.log('checking to see if the user is authenticated.');
     console.log('isAuthenticated: ' + req.isAuthenticated());
+    console.log('user is...');
+    console.log(req.user);
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 // route to login in
@@ -75,6 +77,7 @@ var api = require('./routes/api')(app);
 
 app.get('/api/sessions', api.sessions);
 app.get('/api/users', api.users);
+app.get('/api/users/:userId', api.getUser);
 
 app.post('/api/users', api.addUser);
 app.post('/api/registerUser', api.registerUser);

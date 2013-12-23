@@ -60,6 +60,36 @@ module.exports = function(app) {
             });
         },
 
+        // get specific user
+        getUser: function(req, res) {
+            var userId = req.params.userId;
+
+            console.log("looking for user with id: " + userId);
+            User.find({
+                where: { id: userId }
+            })
+            .error(function(err) {
+                console.log('Unable to locate user: ' + userId);
+                res.status(404)
+                    .send('Could not find user with id ' + userId);
+            })
+            .success(function(user) {
+                if (user == null) {
+                    res.status(404).send("Not found.");
+                    return;
+                }
+                console.log('Found user %s with name %s', userId, user.displayName);
+                var details = {
+                    id: user.id,
+                    firstName: user.givenName,
+                    lastName: user.familyName
+                };
+                res.json({
+                    user: details
+                });
+            });
+        },
+
         // post new user
         addUser: function(req, res) {
             var user = req.body;
@@ -74,8 +104,7 @@ module.exports = function(app) {
             })
             .success(function(user, created) {
                 console.log(user.values);
-                res.writeHead(201);
-                res.end();
+                res.send(201, "Created user " + user.displayName);
             });
         },
 

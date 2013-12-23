@@ -5,19 +5,23 @@ block content
       h1= title
       p Welcome to #{title}
 
-      div.fade(flash-alert='error', active-class='in alert')
+      div.fade(flash-alert='error', active-class='in alert', duration='10000')
+        button.close(type='button', ng-click='hide()') &times;
         strong.alert-heading Uh oh! &nbsp;
         span.alert-message {{ flash.message }}
 
-      div.fade(flash-alert='warn', active-class='in alert')
+      div.fade(flash-alert='warn', active-class='in alert', duration='10000')
+        button.close(type='button', ng-click='hide()') &times;
         strong.alert-heading Uh oh! &nbsp;
         span.alert-message {{ flash.message }}
 
-      div.fade(flash-alert='info', active-class='in alert')
-          strong.alert-heading Note: &nbsp;
-          span.alert-message {{ flash.message }}
+      div.fade(flash-alert='info', active-class='in alert', duration='10000')
+        button.close(type='button', ng-click='hide()') &times;
+        strong.alert-heading Note: &nbsp;
+        span.alert-message {{ flash.message }}
 
-      div.fade(flash-alert='success', active-class='in alert')
+      div.fade(flash-alert='success', active-class='in alert', duration='0')
+          button.close(type='button', ng-click='hide()') &times;
           strong.alert-heading Congrats! &nbsp;
           span.alert-message {{ flash.message }}
 

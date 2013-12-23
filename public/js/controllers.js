@@ -59,21 +59,24 @@ function SessionsController($scope, $http, $location) {
     });
 }
 
-function MenuController($scope, $http, $location) {
+function MenuController($scope, $http, $location, Auth) {
     $scope.getClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
             return true;
         }
         return false;
     };
+
+    $scope.loggedIn = Auth.isLoggedIn;
 }
 
-function LoginController($scope, $rootScope, $http, $location, flash) {
+function LoginController($scope, $rootScope, $http, $location, flash, Auth) {
     // this object will be filled by the form
     $scope.user = {};
 
     // register the login function
     $scope.login = function() {
+        flash.clean();
         console.log("logging in as ");
         console.log($scope.user);
         $http.post('/login', {
@@ -85,6 +88,11 @@ function LoginController($scope, $rootScope, $http, $location, flash) {
             console.log("logged in successfully as...");
             console.log(user);
             flash.success = "Welcome " + user.displayName;
+            Auth.signOn({
+                firstName: user.givenName,
+                lastName: user.familyName,
+                displayName: user.displayName
+            });
             $location.url('/users');
             console.log($location.path());
         })
@@ -96,10 +104,12 @@ function LoginController($scope, $rootScope, $http, $location, flash) {
     };
 
     $scope.logout = function() {
+        flash.clean();
         console.log("logging out...");
         $http.post('/logout')
             .success(function() {
                 console.log("logged out.");
+                Auth.signOff();
                 $location.url('/');
             })
             .error(function() {

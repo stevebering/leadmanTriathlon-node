@@ -20,8 +20,8 @@ html(lang='en', data-ng-app='leadman')
                 span.icon-bar
                 span.icon-bar
             a.navbar-brand(href='#') Leadman Triathlon
-        .collapse.navbar-collapse
-            ul.nav.navbar-nav(data-ng-controller="MenuController")
+        .collapse.navbar-collapse(data-ng-controller="MenuController")
+            ul.nav.navbar-nav
                 li
                     a(href='#') Home
                 li(data-ng-class="{'active':getClass('/users')}")
@@ -30,32 +30,51 @@ html(lang='en', data-ng-app='leadman')
                     a(href='#/sessions') Sessions
 
             ul.nav.navbar-nav.navbar-right(data-ng-controller='LoginController')
-                li
-                    a(href="#/", ng-click="logout()") Sign Out
-                li
+                li(ng-hide='loggedIn()')
                     a(href="#/signup") Sign Up
-                    li.dropdown
-                        a.dropdown-toggle(href="/", data-toggle="dropdown")
-                            | Sign in
-                            b.caret
-                        ul.dropdown-menu(style="padding: 15px;min-width: 250px;")
-                            li
-                                .row
-                                    .col-md-12
-                                        form.form(role="form", name='form', id="login-nav")
-                                            .form-group
-                                                label.sr-only(for="username") Username
-                                                input.form-control(type="email", id="username", name='username', placeholder="Username", data-ng-model='user.usename', required='')
-                                            .form-group
-                                                label.sr-only(for="password") Password
-                                                input.form-control(type="password", id="password",  name='password', placeholder="Password", data-ng-model='user.password', required='')
-                                            .form-group
-                                                button.btn.btn-success.btn-block(type="submit",
-                                                    data-ng-click='login()') Sign in
-                            li.divider
+                li.dropdown(ng-hide='loggedIn()')
+                    a.dropdown-toggle(href="/", data-toggle="dropdown")
+                        | Sign in
+                        b.caret
+                    ul.dropdown-menu(style="padding: 15px;min-width: 250px;")
+                        li
+                            .row
+                                .col-md-12
+                                    form.form(role="form", name='form', id="login-nav")
+                                        .form-group
+                                            label.sr-only(for="username") Username
+                                            input.form-control(type="email", id="username", name='username', placeholder="Username", data-ng-model='user.username', required='')
+                                        .form-group
+                                            label.sr-only(for="password") Password
+                                            input.form-control(type="password", id="password",  name='password', placeholder="Password", data-ng-model='user.password', required='')
+                                        .form-group
+                                            button.btn.btn-success.btn-block(type="submit",
+                                                data-ng-click='login()') Sign in
+                        li.divider
 
-                            li
-                                input.btn.btn-primary.btn-block(type="button", id="sign-in-google", value="Sign In with Google")
+                        li
+                            input.btn.btn-primary.btn-block(type="button", id="sign-in-google", value="Sign In with Google")
+
+                li.dropdown(ng-show='loggedIn()')
+                    a.dropdown-toggle(href='/', data-toggle='dropdown')
+                        span.fa.fa-user &nbsp;
+                        | Profile
+                        b.caret
+                    ul.dropdown-menu
+                        li
+                            a(href="#")
+                                span.fa.fa-user &nbsp;
+                                | Profile
+                        li
+                            a(href="#")
+                                span.fa.fa-gear &nbsp;
+                                | Settings
+                        li.divider
+
+                        li
+                            a(href="#", ng-click="logout()")
+                                span.fa.fa-sign-out &nbsp;
+                                | Sign Out
 
      .container
         block content

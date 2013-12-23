@@ -8,42 +8,48 @@ var leadman = angular.module('leadman',
         'leadman.filters',
         'leadman.services',
         'leadman.directives',
-        'ngRoute',
-        'angular-flash.service',
-        'angular-flash.flash-alert-directive'
+        'ngRoute'
     ]);
 
-leadman.config(['$routeProvider', '$httpProvider', 'flashProvider', function($routeProvider, $httpProvider, flashProvider) {
-    flashProvider.errorClassnames.push("alert-danger");
-    flashProvider.successClassnames.push("alert-success");
-    flashProvider.infoClassnames.push("alert-info");
-    flashProvider.warnClassnames.push("alert-warning");
+leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider, Auth) {
 
     // check if the user is logged in
-    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope, flash) {
+    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope, flash, Auth) {
       // initialize a new promise
         var deferred = $q.defer();
 
         // make an AJAX call to check if the user is logged in
-        $http.get('/loggedin').success(function(user) {
+        $http.get('/loggedIn').success(function(user) {
             // authenticated
             if (user !== '0') {
-                console.log('user is authenticated with id: ' + user);
+                console.log('user is authenticated with id: ' + user.id);
+                console.log(user);
+                if (!Auth.isLoggedIn()) {
+                    Auth.signOn({
+                        firstName: user.givenName,
+                        lastName: user.givenName,
+                        displayName: user.displayName
+                    });
+                }
                 $timeout(deferred.resolve, 0);
             }
             // not authenticated
             else {
-                flash.info = "Please log in to view this page."
-                console.log('user is not authenticated.');
-                $timeout(function() {
-                    deferred.reject(); // reject the promise immediately
-                }, 0);
-                $location.url('/login');
+                notLoggedIn($timeout, deferred, $location, flash);
             }
         });
 
         return deferred.promise;
     };
+
+    var notLoggedIn = function($timeout, deferred, $location, flash) {
+        flash.info = "Please log in to view this page."
+        console.log('user is not authenticated.');
+        $timeout(function() {
+            deferred.reject(); // reject the promise immediately
+        }, 0);
+        $location.url('/login');
+    }
 
     // interceptor for AJAX errors in client
     $httpProvider.responseInterceptors.push(function($q, $location){
@@ -111,5 +117,5 @@ leadman.run(function($rootScope, $http, flash) {
     $rootScope.logout = function() {
         flash.info = "Logged out. Please close your browser to complete your logout."
         $http.post('/api/logout');
-    }
+    };
 })
