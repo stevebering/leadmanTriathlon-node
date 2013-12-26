@@ -77,7 +77,7 @@ var api = require('./routes/api')(app);
 
 app.get('/api/sessions', api.sessions);
 app.get('/api/users', api.users);
-app.get('/api/users/:userId', api.getUser);
+app.get('/api/users/:userId', api.getSingleUser);
 
 app.post('/api/users', api.addUser);
 app.post('/api/registerUser', api.registerUser);

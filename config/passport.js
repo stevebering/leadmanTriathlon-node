@@ -26,6 +26,7 @@ module.exports = function(app, passport, config) {
        })
        .success(function(user) {
            console.log('loaded user: ' + user.displayName);
+           console.log(user.mapmyfitness_id);
            done(null, user);
        });
     });

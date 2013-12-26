@@ -22,13 +22,14 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
         $http.get('/loggedIn').success(function(user) {
             // authenticated
             if (user !== '0') {
-                console.log('user is authenticated with id: ' + user.id);
+                console.log('checkLoggedIn: User is authenticated with id: ' + user.id);
                 console.log(user);
                 if (!Auth.isLoggedIn()) {
                     Auth.signOn({
                         firstName: user.givenName,
                         lastName: user.givenName,
-                        displayName: user.displayName
+                        displayName: user.displayName,
+                        mapmyfitnessid: user.mapmyfitness_id
                     });
                 }
                 $timeout(deferred.resolve, 0);
@@ -118,4 +119,7 @@ leadman.run(function($rootScope, $http, flash) {
         flash.info = "Logged out. Please close your browser to complete your logout."
         $http.post('/api/logout');
     };
+    $rootScope.$on('$routeChangeSuccess', function(){
+        flash.clean();
+    });
 })

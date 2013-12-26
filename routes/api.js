@@ -61,7 +61,7 @@ module.exports = function(app) {
         },
 
         // get specific user
-        getUser: function(req, res) {
+        getSingleUser: function(req, res) {
             var userId = req.params.userId;
 
             console.log("looking for user with id: " + userId);
@@ -110,7 +110,7 @@ module.exports = function(app) {
 
         // post new user
         registerUser: function(req, res) {
-            var submission = req.body;
+            var submission = req.body
             console.log('Registering user: ' + JSON.stringify(submission));
             hash(submission.password, function(err, salt, hash) {
                if (err) {
@@ -127,7 +127,8 @@ module.exports = function(app) {
                         provider_id: submission.emailAddress,
                         displayName: submission.firstName + ' ' + submission.lastName,
                         givenName: submission.firstName,
-                        familyName: submission.lastName
+                        familyName: submission.lastName,
+                        mapmyfitness_id: submission.mapmyfitnessid
                     }),
                     credential = UserCredential.build({
                         username: submission.emailAddress,
@@ -146,7 +147,7 @@ module.exports = function(app) {
                         credential.setUser(user).on('success', function() {
                             credential.getUser().on('success', function(u) {
                                 console.log('Credential user: ', u.displayName);
-                                req.login(credential);
+                                //req.login(credential);
                                 res.writeHead(201);
                                 res.end();
                             })

@@ -28,6 +28,8 @@ html(lang='en', data-ng-app='leadman')
                     a(href='#/users') Users
                 li(data-ng-class="{'active':getClass('/sessions')}")
                     a(href='#/sessions') Sessions
+                li(data-ng-show='currentUser().mapmyfitnessid')
+                    a(href='#/import') Import Workouts
 
             ul.nav.navbar-nav.navbar-right(data-ng-controller='LoginController')
                 li(ng-hide='loggedIn()')
@@ -78,6 +80,39 @@ html(lang='en', data-ng-app='leadman')
 
      .container
         block content
+
+     .container
+        hr
+        .row
+            .col-lg-12
+                .col-md-4
+                    ul.list-unstyled
+                        li
+                            a(href='https://github.com/stevebering/leadmanTriathlon-node') GitHub
+                        li
+                        li
+                .col-md-4
+                    ul.list-unstyled
+                        li
+                            | Version &nbsp;
+                            span(data-app-version='')
+                        li
+                        li
+                .col-md-4
+                    ul.list-unstyled
+                        li
+                        li
+                        li
+        hr
+        .row
+            .col-lg-12
+                .col-md-8
+                    a(href='#') Terms of Service &nbsp;
+                    a(href='#') Privacy &nbsp;
+                    a(href='#') Security &nbsp;
+
+                .col-md-4
+                    p.muted.pull-right &copy; 2013 Steve Bering. All rights reserved.
 
     script(type='text/javascript', src='/components/jquery/jquery.min.js')
     script(type='text/javascript', src='/components/bootstrap/dist/js/bootstrap.min.js')

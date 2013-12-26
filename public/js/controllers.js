@@ -32,7 +32,12 @@ function UsersController($scope, $http, $location) {
     };
 }
 
-function SessionsController($scope, $http, $location) {
+function SessionsController($scope, $http, $location, $filter) {
+    // set up defaults
+    $scope.session = {
+        startDate: $filter('date')(Date.now(), 'yyyy-MM-dd')
+    };
+
     $scope.convertToUTC = function(dt) {
         if (!dt) {
             return dt;
@@ -86,12 +91,13 @@ function LoginController($scope, $rootScope, $http, $location, flash, Auth) {
         })
         .success(function (user) {
             // no errors: authentication ok
-            console.log("logged in successfully as...");
+            console.log("LoginController: logged in successfully as...");
             console.log(user);
             Auth.signOn({
                 firstName: user.givenName,
                 lastName: user.familyName,
-                displayName: user.displayName
+                displayName: user.displayName,
+                mapmyfitnessid: user.mapmyfitness_id
             });
             $scope.user.username = '';
             $scope.user.password = '';

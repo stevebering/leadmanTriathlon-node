@@ -75,6 +75,20 @@
                     .help-block.error(data-ng-show='form.confirm.$dirty && form.confirm.$invalid')
                         span(data-ng-show='form.confirm.$error.passwordVerify') Passwords do not match
 
+                .form-group(ng-class="{'has-error': form.mapmyfitnessid.$invalid, 'has-success': !form.mapmyfitnessid.$invalid}")
 
-                button.btn.btn-default(type='submit', data-ng-click='registerUser()',
+                    label.control-label(for='mapmyfitnessid') MapMyFitness ID
+
+                    .input-group
+                        input.form-control(type='number', id='mapmyfitnessid', name='mapmyfitnessid',
+                        placeholder='MapMyFitness ID', data-ng-model='user.mapmyfitnessid', required='')
+                        span.input-group-addon
+                            i.fa.fa-star
+
+                    .help-block.error(data-ng-show='form.mapmyfitnessid.$dirty && form.mapmyfitnessid.$invalid')
+                        span Please provide your MapMyFitness ID number
+
+
+
+    button.btn.btn-default(type='submit', data-ng-click='registerUser()',
                     data-ng-disabled='form.$invalid') Register

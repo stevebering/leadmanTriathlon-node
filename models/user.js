@@ -17,7 +17,8 @@ module.exports = function(sequelize, DataTypes) {
         displayName: DataTypes.STRING(128),
         givenName: DataTypes.STRING(45),
         middleName: DataTypes.STRING(45),
-        familyName: DataTypes.STRING(45)
+        familyName: DataTypes.STRING(45),
+        mapmyfitness_id: DataTypes.INTEGER
     });
 };
 

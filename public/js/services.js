@@ -25,7 +25,8 @@ appServices.factory('Auth', function() {
        defaultUser = {
         firstName: '',
         lastName: '',
-        displayName: ''
+        displayName: '',
+        mapmyfitnessid: 0
        },
        currentUser = defaultUser;
 
@@ -42,11 +43,13 @@ appServices.factory('Auth', function() {
            currentUser = defaultUser;
        },
        signOn: function(user) {
-           console.log("signing user %s on", user.displayName);
+           console.log("signing user %s on (%s)", user.displayName, user.mapmyfitnessid);
+           console.log(user);
            isLoggedIn = true;
            currentUser.firstName = user.firstName;
            currentUser.lastName = user.lastName;
            currentUser.displayName = user.displayName;
+           currentUser.mapmyfitnessid = user.mapmyfitnessid;
        }
    };
 });
