@@ -35,6 +35,11 @@ module.exports = function(sequelize, DataTypes) {
         activityType: {
             type: DataTypes.ENUM,
             values: ['swim', 'bike', 'run']
+        },
+        unique_id: { 
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            unique: true
         }
     });
 };

@@ -1,0 +1,61 @@
+// Created by stevebering on 12/7/13.
+
+.container
+
+    .row
+        .col-md-12
+            p There are {{ splits.length }} splits
+
+    .row
+        .col-md-12
+            table.table.table-striped
+                thead
+                    tr
+                        th Split
+                        th Start
+                        th Duration
+                        th Distance
+                        th Activity
+                tbody
+                    tr(data-ng-repeat='split in splits')
+                        td {{ split.name }}
+                        td {{ split.startDate | date:'short' }}
+                        td {{ split.activeTime | duration }}
+                        td {{ split.distance | distance }}
+                        td {{ split.activityType }}
+
+    .row
+        .col-md-6
+            table.table.table-striped
+                thead
+                    tr
+                        th Activity
+                        th(style='width: 100px') Distance
+                        th(style='width: 100px') Completed
+                        th(style='width: 100px') Remaining
+                tbody.text-right
+                    tr
+                        td.text-left Swimming
+                        td {{ swims.expectation }} miles
+                        td {{ swims.distance.toFixed(2) }} miles
+                        td {{ swims.remaining.toFixed(2) }} miles
+
+                    tr
+                        td.text-left Biking
+                        td {{ rides.expectation }} miles
+                        td {{ rides.distance.toFixed(2)  }} miles
+                        td {{ rides.remaining.toFixed(2)  }} miles
+
+                    tr
+                        td.text-left Running
+                        td {{ runs.expectation }} miles
+                        td {{ runs.distance.toFixed(2) }} miles
+                        td {{ runs.remaining.toFixed(2)  }} miles
+
+    .row
+        .col-md-12
+            ul.nav.nav-pills
+                li
+                    a {{ splits.length }} splits
+                li
+                    a(href='#/addSplit') Add Split

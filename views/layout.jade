@@ -29,7 +29,7 @@ html(lang='en', data-ng-app='leadman')
                 li(data-ng-class="{'active':getClass('/sessions')}")
                     a(href='#/sessions') Sessions
                 li(data-ng-show='currentUser().mapmyfitnessid')
-                    a(href='#/import') Import Workouts
+                    a(href='#/splits') Import Workouts
 
             ul.nav.navbar-nav.navbar-right(data-ng-controller='LoginController')
                 li(ng-hide='loggedIn()')
@@ -122,5 +122,7 @@ html(lang='en', data-ng-app='leadman')
     script(type='text/javascript', src='/components/angular-route/angular-route.js')
     script(type='text/javascript', src='/components/angular-resource/angular-resource.js')
     script(type='text/javascript', src='/components/angular-flash/dist/angular-flash.js')
+    script(type='text/javascript', src='/components/momentjs/moment.js')
+    script(type='text/javascript', src='/js/date.js')
 
     block scripts

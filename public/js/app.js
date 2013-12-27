@@ -26,6 +26,7 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
                 console.log(user);
                 if (!Auth.isLoggedIn()) {
                     Auth.signOn({
+                        id: user.id,
                         firstName: user.givenName,
                         lastName: user.givenName,
                         displayName: user.displayName,
@@ -101,6 +102,13 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
         .when('/addUser', {
             templateUrl: 'partials/addUser',
             controller: UsersController,
+            resolve: {
+                loggedin: checkLoggedIn
+            }
+        })
+        .when('/splits', {
+            templateUrl: 'partials/splits',
+            controller: SplitsController,
             resolve: {
                 loggedin: checkLoggedIn
             }

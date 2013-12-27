@@ -4,7 +4,8 @@
 
 /* serve json to our AngularJs Client */
 var hash = require('../utils/hash'),
-    Sequelize = require('sequelize');
+    Sequelize = require('sequelize'),
+    math = require('../utils/math');
 
 module.exports = function(app) {
     var User = app.get('models').User,
@@ -60,6 +61,34 @@ module.exports = function(app) {
             });
         },
 
+        // get active session
+        getActiveSession: function(req, res) {
+            console.log("looking for active session...");
+            Session.find({
+                where: ["startDate <= ? AND (endDate IS NULL || endDate >= ?)", new Date(), new Date()]
+            })
+            .error(function(err) {
+                console.log('Unable to locate any active sessions');
+                res.status(404)
+                    .send('Could not find any active sessions');
+            })
+            .success(function(session) {
+                if (session == null || !session.isActive) {
+                    res.status(404).send("Not found.");
+                    return;
+                }
+                console.log('Found session %s with name %s', session.id, session.name);
+                var details = {
+                    id: session.id,
+                    firstName: session.name,
+                    startDate: session.startDate
+                };
+                res.json({
+                    session: details
+                });
+            });
+        },
+
         // get specific user
         getSingleUser: function(req, res) {
             var userId = req.params.userId;
@@ -86,6 +115,71 @@ module.exports = function(app) {
                 };
                 res.json({
                     user: details
+                });
+            });
+        },
+
+        // get specific user
+        getUserSessionSplits: function(req, res) {
+            var sessionId = req.params.session,
+                userId = req.params.user,
+                splits = [];
+
+            console.log("looking for splits for user with id %s in session %s", userId, sessionId);
+            Split.findAll({
+                where: {
+                    user_id: userId,
+                    session_id: sessionId
+                },
+                order: 'startDate ASC'
+            })
+            .error(function(err) {
+                res.status(404)
+                    .send('Could not find splits for user %s in session %s.', userId, sessionId);
+            })
+            .success(function(records) {
+                records.forEach(function(row) {
+                    var split = {
+                        id: row.id,
+                        name: row.name,
+                        startDate: row.startDate,
+                        activeTime: row.activeTime,
+                        distance: row.distanceTotal,
+                        activityType: row.activityType
+                    };
+                    console.log(split);
+                    splits.push(split);
+                });
+
+                var totalRuns = math.summarize(records, 'run'),
+                    totalSwims = math.summarize(records, 'swim'),
+                    totalRides = math.summarize(records, 'bike'),
+                    runLength = 26.0,
+                    swimLength = 2.4,
+                    bikeLength = 112.0;
+
+                console.log('all splits loaded. Found: ' + records.length);
+                console.log('runs: %s of %d', totalRuns, runLength);
+                console.log('bikes: %s of %d', totalRides, bikeLength);
+                console.log('swims: %s of %d', totalSwims, swimLength);
+
+                res.send({
+                    runs: {
+                        distance: totalRuns,
+                        expectation: runLength,
+                        remaining: runLength - totalRuns
+                    },
+                    rides: {
+                        distance: totalRides,
+                        expectation: bikeLength,
+                        remaining: bikeLength - totalRides
+                    },
+                    swims: {
+                        distance: totalSwims,
+                        expectation: swimLength,
+                        remaining: swimLength - totalSwims
+                    },
+                    splits: splits
                 });
             });
         },

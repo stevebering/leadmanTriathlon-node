@@ -64,6 +64,25 @@ function SessionsController($scope, $http, $location, $filter) {
     });
 }
 
+function SplitsController($scope, $http, $location, Auth) {
+    $http.get('/api/sessions/current')
+        .success(function(data, status, headers, config) {
+            console.log(Auth.currentUser());
+            console.log(data);
+            var user = Auth.currentUser().id,
+                session = data.session.id,
+                url = '/api/splits/' + session + '/' + user;
+            console.log('loading data from "%s".', url);
+            $http.get(url)
+                .success(function(result) {
+                    $scope.splits = result.splits;
+                    $scope.runs = result.runs;
+                    $scope.rides = result.rides;
+                    $scope.swims = result.swims;
+                });
+        });
+}
+
 function MenuController($scope, $http, $location, Auth) {
     $scope.getClass = function(path) {
         if ($location.path().substr(0, path.length) == path) {
@@ -94,6 +113,7 @@ function LoginController($scope, $rootScope, $http, $location, flash, Auth) {
             console.log("LoginController: logged in successfully as...");
             console.log(user);
             Auth.signOn({
+                id: user.id,
                 firstName: user.givenName,
                 lastName: user.familyName,
                 displayName: user.displayName,

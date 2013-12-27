@@ -23,6 +23,7 @@ appServices.config(function(flashProvider) {
 appServices.factory('Auth', function() {
    var isLoggedIn = false,
        defaultUser = {
+        id: 0,
         firstName: '',
         lastName: '',
         displayName: '',
@@ -46,6 +47,7 @@ appServices.factory('Auth', function() {
            console.log("signing user %s on (%s)", user.displayName, user.mapmyfitnessid);
            console.log(user);
            isLoggedIn = true;
+           currentUser.id = user.id;
            currentUser.firstName = user.firstName;
            currentUser.lastName = user.lastName;
            currentUser.displayName = user.displayName;
