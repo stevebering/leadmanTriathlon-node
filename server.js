@@ -8,7 +8,7 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     passport = require('passport'),
-    config = require('./config/config'),
+    config = require('config'),
     app = express(),
     auth = require('./middleware/auth');
 
@@ -54,23 +54,10 @@ app.get('/anon/:name', routes.anon);
 app.get('/partials/:name', auth, routes.partials);
 
 // authentication routes
-app.get('/loggedIn', function(req, res) {
-    console.log('checking to see if the user is authenticated.');
-    console.log('isAuthenticated: ' + req.isAuthenticated());
-    console.log('user is...');
-    console.log(req.user);
-    res.send(req.isAuthenticated() ? req.user : '0');
-});
-// route to login in
-app.post('/login', passport.authenticate('local'), function(req, res) {
-    console.log('logged in as ' + req.user.givenName);
-    res.send(req.user);
-});
-// route to log out
-app.post('/logout', function(req, res) {
-    req.logOut();
-    res.send(200);
-});
+var authentication = require('./routes/auth');
+app.get('/loggedIn', authentication.loggedIn);
+app.post('/login', passport.authenticate('local'), authentication.login);
+app.post('/logout', authentication.logout);
 
 // json api
 var api = require('./routes/api')(app);

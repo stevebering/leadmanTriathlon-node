@@ -117,12 +117,16 @@ leadman.config(['$routeProvider', '$httpProvider', function($routeProvider, $htt
             templateUrl: 'anon/signup',
             controller: UsersController
         })
+        .when('/welcome', {
+            templateUrl: 'anon/welcome',
+            controller: HomeController
+        })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/welcome'
         });
 }]);
 
-leadman.run(function($rootScope, $http, flash) {
+leadman.run(['$rootScope', '$http', 'flash', '$route', function($rootScope, $http, flash, $route) {
     $rootScope.logout = function() {
         flash.info = "Logged out. Please close your browser to complete your logout."
         $http.post('/api/logout');
@@ -130,4 +134,4 @@ leadman.run(function($rootScope, $http, flash) {
     $rootScope.$on('$routeChangeSuccess', function(){
         flash.clean();
     });
-})
+}]);

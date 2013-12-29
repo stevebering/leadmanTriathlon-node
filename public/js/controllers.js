@@ -95,6 +95,10 @@ function MenuController($scope, $http, $location, Auth) {
     $scope.currentUser = Auth.currentUser;
 }
 
+function HomeController($scope, $http, $location) {
+    $scope.title = 'Leadman Triathlon';
+}
+
 function LoginController($scope, $rootScope, $http, $location, flash, Auth) {
     // this object will be filled by the form
     $scope.user = {};

@@ -28,13 +28,15 @@ html(lang='en', data-ng-app='leadman')
                     a(href='#/users') Users
                 li(data-ng-class="{'active':getClass('/sessions')}")
                     a(href='#/sessions') Sessions
-                li(data-ng-show='currentUser().mapmyfitnessid')
-                    a(href='#/splits') Import Workouts
+                li(data-ng-show='currentUser().mapmyfitnessid', data-ng-class="{'active':getClass('/splits')}", data-ng-cloak='')
+                    a(href='#/splits') Workouts
+                li(data-ng-show='currentUser().mapmyfitnessid', data-ng-class="{'active':getClass('/import')}", data-ng-cloak='')
+                    a(href='#/import') Import
 
-            ul.nav.navbar-nav.navbar-right(data-ng-controller='LoginController')
-                li(ng-hide='loggedIn()')
+        ul.nav.navbar-nav.navbar-right(data-ng-controller='LoginController')
+                li(ng-hide='loggedIn()', ng-cloak='')
                     a(href="#/signup") Sign Up
-                li.dropdown(ng-hide='loggedIn()')
+                li.dropdown(ng-hide='loggedIn()', ng-cloak='')
                     a.dropdown-toggle(href="/", data-toggle="dropdown")
                         | Sign in
                         b.caret
@@ -57,7 +59,7 @@ html(lang='en', data-ng-app='leadman')
                         li
                             input.btn.btn-primary.btn-block(type="button", id="sign-in-google", value="Sign In with Google")
 
-                li.dropdown.active#profile(ng-show='loggedIn()')
+                li.dropdown.active#profile(ng-show='loggedIn()', ng-cloak='')
                     a.dropdown-toggle(href='/', data-toggle='dropdown')
                         span.fa.fa-user &nbsp;
                         | {{ currentUser().firstName }}
